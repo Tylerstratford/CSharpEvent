@@ -43,7 +43,7 @@
         <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="center">
             <StackPanel>
                 <TextBlock Text="See below for a list of the attendees. If you wish to unbook please remove yourself from the list"  Foreground="#394C73" FontSize="18" TextWrapping="wrap" TextAlignment="left" Margin="25 10 25 10" ></TextBlock>
-                <ListView x:Name="lvAttendees" MaxHeight="500" Margin="10" Background="Transparent" DataContext="CSharpEvent.Models.Regisration" HorizontalAlignment="Stretch"  Foreground="#1142A6" BorderBrush="Transparent">
+                <ListView x:Name="lvAttendees" MaxHeight="350" Margin="10" Background="Transparent" DataContext="CSharpEvent.Models.Regisration" HorizontalContentAlignment="Stretch"  Foreground="#1142A6" BorderBrush="Transparent">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -57,15 +57,16 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding FirstName}" Margin="0 0 0 0" />
-                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding LastName}" Margin="0 0 5 0"/>
-                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Email}" Margin="0 0 5 0"/>
-                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding Role}" FontWeight="bold" Margin="0 0 5 0"/>
-                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding CouponCode}" Margin="0 0 5 0"/>
-                                <!--<Button x:Name="ShowCode" Click="ShowCode_Click" Grid.Column="2" Content="Show Code"/>-->
-                                <Button x:Name="btnDelete" Click="btnDelete_Click" Grid.Row="0" Grid.Column="2" Background="Transparent" BorderBrush="Transparent" FontWeight="bold" FontSize="16" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"/>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding FirstName}"/>
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding LastName}"/>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Email}"/>
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding Role}" FontWeight="bold"/>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding CouponCode}"/>
+                                <Button Grid.Column="2" Grid.Row="4" Margin="0 0 0 0" Content="Send Voucher" Width="100" Foreground="#1142A6" Background="#F2F2F2" BorderBrush="Transparent" ></Button>
+                                <Button x:Name="btnDelete" Click="btnDelete_Click" Grid.Row="0" Width="auto" Height="auto" Grid.Column="2" Background="Transparent" HorizontalContentAlignment="Right" BorderBrush="Transparent" FontWeight="bold" FontSize="16" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"/>
                             </Grid>
 
                         </DataTemplate>

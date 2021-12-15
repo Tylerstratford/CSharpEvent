@@ -27,8 +27,8 @@ namespace CSharpEvent
         //Text file location
         string filePath = @"C:\Users\tyler\Desktop\CSharpEvent\CSharpEvent\TextFile\ListOfAttendees.txt";
 
-        //Used for binding in WPF
-        ObservableCollection<Registration> attendee = new ObservableCollection<Registration>();
+        //Used for binding in WPF. List did not work as intended - issues with deleting list from GUI
+        ObservableCollection<Registration> Attendee = new ObservableCollection<Registration>();
 
         public MainWindow()
         {
@@ -38,36 +38,46 @@ namespace CSharpEvent
 
         }
 
-
+        /// <summary>
+        /// Adds regristation data on submit to listview and text file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Registration NewRegistration = new Registration { FirstName = tbFirstName.Text, LastName = tbLastName.Text, Email = tbEmail.Text, Role = tbRole.Text  };
-            tbFirstName.Text = "";
-            tbLastName.Text = "";
-            tbEmail.Text = "";
-            tbRole.Text = "";
-            string newAttendee = $"{NewRegistration.FirstName} {NewRegistration.LastName} {NewRegistration.Email} {NewRegistration.Role} {NewRegistration.CouponCode}";
-            
-            attendee.Add(NewRegistration);
-            lvAttendees.ItemsSource = attendee;
+            if (!string.IsNullOrEmpty(tbFirstName.Text) && !string.IsNullOrEmpty(tbFirstName.Text) && !string.IsNullOrEmpty(tbEmail.Text) && !string.IsNullOrEmpty(tbRole.Text)) {
+                
+                Registration NewRegistration = new Registration { FirstName = tbFirstName.Text, LastName = tbLastName.Text, Email = tbEmail.Text, Role = tbRole.Text };
+                tbFirstName.Text = "";
+                tbLastName.Text = "";
+                tbEmail.Text = "";
+                tbRole.Text = "";
+                string newAttendee = $"{NewRegistration.FirstName} {NewRegistration.LastName} {NewRegistration.Email} {NewRegistration.Role} {NewRegistration.Id}";
 
-            //Writing data to text file
-            if (!File.Exists(filePath)) {
-                using (StreamWriter sw = File.CreateText(filePath))
+                Attendee.Add(NewRegistration);
+                lvAttendees.ItemsSource = Attendee;
+               
+                //Writing data to text file upon submission (Submit button)
+                if (!File.Exists(filePath)) {
+                    using (StreamWriter sw = File.CreateText(filePath))
+                    {
+                        sw.WriteLine(newAttendee);
+                    }
+                } else
                 {
-                    sw.WriteLine(newAttendee);
-                }
-            } else
-            {
-                using (StreamWriter sw = File.AppendText(filePath))
-                {
-                    sw.WriteLine(newAttendee);
+                    using (StreamWriter sw = File.AppendText(filePath))
+                    {
+                        sw.WriteLine(newAttendee);
+                    }
                 }
             }
-
         }
 
-        //Retrieves data from Text.file
+        //Retreives data from Text.file
+        /// <summary>
+        /// Retreives data (list) from Text.file. Seperates string into an array for indexing
+        /// </summary>
+        /// <returns></returns>
         public async Task RetreiveAttendees()
         {
 
@@ -78,36 +88,68 @@ namespace CSharpEvent
                 while ((line = await sr.ReadLineAsync()) != null)
                 {
                     string[] parts = line.Split(" ");
-                    attendee.Add(new Registration { FirstName = parts[0], LastName = parts[1], Email = parts[2], Role = parts[3] } );
+                    Attendee.Add(new Registration { FirstName = parts[0], LastName = parts[1], Email = parts[2], Role = parts[3], Id = new Guid(parts[4]) } );
 
                 }
             }
 
-           await FetchWait();
+           FetchWait();
         }
 
         //If the list count is above 0 in the text file, the list will appear in the Listview, otherwise nothing is written.
         //Needed to solve issue with loading list upon program execution
-        private async Task FetchWait()
+        /// <summary>
+        /// Displaying to listview if attendee count > 0, solving loading issue upon program execution
+        /// </summary>
+        private void FetchWait()
         {
-            if (attendee.Count > 0)
+            if (Attendee.Count > 0)
             {
-                lvAttendees.ItemsSource = attendee;
+                lvAttendees.ItemsSource = Attendee;
             }
         }
 
 
-        //Deletes object from Listview and (text file)
+        //Deletes object from Listview and (text file). Rewrites file "ListOfAttendees"
+        /// <summary>
+        /// Deletes object from Listview and text filen on click - Rewrites to file "ListOfAttendees"
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             var obj = (Button)sender;
             var item = (Registration)obj.DataContext;
-            attendee.Remove(item);
+            Attendee.Remove(item);
+ 
+            //Creating a new list to store data of the attendees that are not deleted
+            ObservableCollection<Registration> attendeeTemp = new ObservableCollection<Registration>();
+
+            string line;
+            //Read only
+            using (StreamReader sr = new StreamReader(filePath))
+            {
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] parts = line.Split(" ");
+                    if (item.Id.ToString() != parts[4])
+                    {
+                        attendeeTemp.Add(new Registration { FirstName = parts[0], LastName = parts[1], Email = parts[2], Role = parts[3], Id = new Guid(parts[4]) });
+                    }
+                }
+            }
+
+            File.Delete(filePath);
+            //Rewriting the stored data in atendeeTemp to the text file
+            using (StreamWriter sw = File.CreateText(filePath))
+            {
+                foreach (var person in attendeeTemp)
+                {
+                    sw.WriteLine($"{person.FirstName} {person.LastName} {person.Email} {person.Role} {person.Id}");
+
+                }
+            }
         }
 
-        private void ShowCode_Click(object sender, RoutedEventArgs e)
-        {
-           
-        }
     }
 }

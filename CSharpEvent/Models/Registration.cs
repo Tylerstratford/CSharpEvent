@@ -18,8 +18,6 @@ namespace CSharpEvent.Models
 
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        //public string Info => $"{FirstName} {LastName} {Email} {Role} ";
-        //public string FullName => $"{FirstName} {LastName}";
         public string CouponCode => $"Voucher: EC-{Id.ToString().Substring(0, 5).ToUpper()}";
     }
 }
