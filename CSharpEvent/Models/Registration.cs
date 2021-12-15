@@ -10,11 +10,16 @@ namespace CSharpEvent.Models
     {
      
 
-        public string FirstName { get; set; }
+        public string FirstName  { get; set; }
         public string LastName { get; set; }
-        public string Age { get; set; }
         public string Email { get; set; }
 
         public string Role { get; set; }
+
+        public Guid Id { get; set; } = Guid.NewGuid();
+
+        //public string Info => $"{FirstName} {LastName} {Email} {Role} ";
+        //public string FullName => $"{FirstName} {LastName}";
+        public string CouponCode => $"Voucher: EC-{Id.ToString().Substring(0, 5).ToUpper()}";
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CSharpEvent"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="550" Width="900"
         Background="Thistle">
     
     <Grid>
@@ -28,9 +28,6 @@
                 <!--last name-->
                 <TextBlock Text="Last Name" HorizontalAlignment="Left" Foreground="#1142A6" Margin="25 10 0 2" FontSize="16"></TextBlock>
                 <TextBox x:Name="tbLastName" Background="#F2F2F2" Margin="25 0 25 0" BorderBrush="Transparent"></TextBox>
-                <!--age-->
-                <TextBlock Text="Age" HorizontalAlignment="Left" Foreground="#1142A6" Margin="25 10 0 2" FontSize="16"></TextBlock>
-                <TextBox x:Name="tbAge" Background="#F2F2F2" Margin="25 0 25 0" BorderBrush="Transparent"></TextBox>
                 <!--email-->
                 <TextBlock Text="Email Address" HorizontalAlignment="Left" Foreground="#1142A6" Margin="25 10 0 2" FontSize="16"></TextBlock>
                 <TextBox x:Name="tbEmail" Background="#F2F2F2" Margin="25 0 25 0" BorderBrush="Transparent"></TextBox>
@@ -46,29 +43,29 @@
         <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="center">
             <StackPanel>
                 <TextBlock Text="See below for a list of the attendees. If you wish to unbook please remove yourself from the list"  Foreground="#394C73" FontSize="18" TextWrapping="wrap" TextAlignment="left" Margin="25 10 25 10" ></TextBlock>
-                <ListView x:Name="lvAttendees" Margin="10" Background="#F2F2F2" DataContext="CSharpEvent.Models.Regisration" HorizontalAlignment="Stretch"  Foreground="#1142A6" BorderBrush="Transparent" BorderThickness="0">
+                <ListView x:Name="lvAttendees" MaxHeight="500" Margin="10" Background="Transparent" DataContext="CSharpEvent.Models.Regisration" HorizontalAlignment="Stretch"  Foreground="#1142A6" BorderBrush="Transparent">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <!--<Grid.RowDefinitions>
+                                <Grid.RowDefinitions>
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>-->
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Column="0" Text="{Binding FirstName}" Margin="2 0 10 0" />
-                                <TextBlock Grid.Column="1" Text="{Binding LastName}" Margin="2 0 10 0"/>
-                                <TextBlock Grid.Column="2" Text="{Binding Age}" Margin="2 0 10 0"/>
-                                <TextBlock Grid.Column="3" Text="{Binding Email}" Margin="2 0 10 0"/>
-                                <TextBlock Grid.Column="4"  Text="{Binding Role}" Margin="2 0 10 0"/>
-                                <Button x:Name="btnDelete" Grid.Row="0" Grid.Column="5" FontSize="16" FontFamily="Segoe MDL2 Assets" Content="&#xE711;" MouseUp="btnDelete_MouseUp_1" />
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding FirstName}" Margin="0 0 0 0" />
+                                <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding LastName}" Margin="0 0 5 0"/>
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Email}" Margin="0 0 5 0"/>
+                                <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding Role}" FontWeight="bold" Margin="0 0 5 0"/>
+                                <TextBlock Grid.Column="0" Grid.Row="4" Text="{Binding CouponCode}" Margin="0 0 5 0"/>
+                                <!--<Button x:Name="ShowCode" Click="ShowCode_Click" Grid.Column="2" Content="Show Code"/>-->
+                                <Button x:Name="btnDelete" Click="btnDelete_Click" Grid.Row="0" Grid.Column="2" Background="Transparent" BorderBrush="Transparent" FontWeight="bold" FontSize="16" FontFamily="Segoe MDL2 Assets" Content="&#xE711;"/>
                             </Grid>
 
                         </DataTemplate>
