@@ -32,14 +32,12 @@ namespace CSharpEvent
 
         public MainWindow()
         {
-            
             InitializeComponent();
             Task.FromResult(RetreiveAttendees());
-
         }
 
         /// <summary>
-        /// Adds regristation data on submit to listview and text file
+        /// If registration fields have text, calls AddToList() to add text to text file and listview
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -53,7 +51,7 @@ namespace CSharpEvent
 
 
         /// <summary>
-        /// 
+        /// Takes users input and adds to list, calls CreateTextFile
         /// </summary>
         public void AddToList()
         {
@@ -98,7 +96,6 @@ namespace CSharpEvent
         /// <returns></returns>
         public async Task RetreiveAttendees()
         {
-
             string line;
             //Read only
             using (StreamReader sr = new StreamReader(filePath))
@@ -107,7 +104,6 @@ namespace CSharpEvent
                 {
                     string[] parts = line.Split(" ");
                     Attendee.Add(new Registration { FirstName = parts[0], LastName = parts[1], Email = parts[2], Role = parts[3], Id = new Guid(parts[4]) } );
-
                 }
             }
 

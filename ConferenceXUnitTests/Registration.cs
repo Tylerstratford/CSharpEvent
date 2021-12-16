@@ -17,6 +17,9 @@ namespace ConferenceXUnitTests
         string filePath = @"C:\Users\tyler\Desktop\CSharpEvent\CSharpEvent\TextFile\ListOfAttendees.txt";
 
 
+        /// <summary>
+        /// Adds item to list
+        /// </summary>
         List<Registration> newRegistration = new List<Registration>();
         internal bool AddToList(Registration attendee)
         {
@@ -30,10 +33,16 @@ namespace ConferenceXUnitTests
             }
         }
 
+        /// <summary>
+        /// Removes item from list
+        /// </summary>
+        /// <param name="attendee"></param>
+        /// <returns></returns>
+        //BtnDelete_Click
         internal bool RemoveFromList(Registration attendee)
         {
             newRegistration.Remove(attendee);
-            if (newRegistration != null)
+            if (newRegistration == null)
             {
                 return true;
             }
@@ -44,6 +53,12 @@ namespace ConferenceXUnitTests
         }
 
  
+        /// <summary>
+        /// Creates text file if no file exists
+        /// </summary>
+        /// <param name="newRegistration"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         internal bool CreateTextFile(List<Registration> newRegistration, string filePath)
         {
             if (!File.Exists(filePath))
@@ -58,15 +73,6 @@ namespace ConferenceXUnitTests
             {
                 return false;
             }
-            //if (File.Exists(filePath))
-            //{
-            //    using (StreamWriter sw = File.AppendText(filePath))
-            //    {
-            //        sw.WriteLine(newRegistration);
-            //    }
-            //    return true;
-            //} 
-            //else { return false; }
         }
         
     }
