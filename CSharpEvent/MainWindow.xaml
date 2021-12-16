@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CSharpEvent"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="900"
-        Background="Thistle">
+        Background="#bcd4e6">
     
     <Grid>
         <Grid.RowDefinitions>
