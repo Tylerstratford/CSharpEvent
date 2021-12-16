@@ -43,32 +43,50 @@ namespace CSharpEvent
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        public void btnAdd_Click(object sender, RoutedEventArgs e)
         {
+            //If text blocks are filled in
             if (!string.IsNullOrEmpty(tbFirstName.Text) && !string.IsNullOrEmpty(tbFirstName.Text) && !string.IsNullOrEmpty(tbEmail.Text) && !string.IsNullOrEmpty(tbRole.Text)) {
-                
-                Registration NewRegistration = new Registration { FirstName = tbFirstName.Text, LastName = tbLastName.Text, Email = tbEmail.Text, Role = tbRole.Text };
-                tbFirstName.Text = "";
-                tbLastName.Text = "";
-                tbEmail.Text = "";
-                tbRole.Text = "";
-                string newAttendee = $"{NewRegistration.FirstName} {NewRegistration.LastName} {NewRegistration.Email} {NewRegistration.Role} {NewRegistration.Id}";
+                AddToList();
+            }
+        }
 
-                Attendee.Add(NewRegistration);
-                lvAttendees.ItemsSource = Attendee;
-               
-                //Writing data to text file upon submission (Submit button)
-                if (!File.Exists(filePath)) {
-                    using (StreamWriter sw = File.CreateText(filePath))
-                    {
-                        sw.WriteLine(newAttendee);
-                    }
-                } else
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void AddToList()
+        {
+            Registration NewRegistration = new Registration { FirstName = tbFirstName.Text, LastName = tbLastName.Text, Email = tbEmail.Text, Role = tbRole.Text };
+            tbFirstName.Text = "";
+            tbLastName.Text = "";
+            tbEmail.Text = "";
+            tbRole.Text = "";
+            string newAttendee = $"{NewRegistration.FirstName} {NewRegistration.LastName} {NewRegistration.Email} {NewRegistration.Role} {NewRegistration.Id}";
+
+            Attendee.Add(NewRegistration);
+            lvAttendees.ItemsSource = Attendee;
+
+            CreateTextFile(newAttendee);
+        }
+        /// <summary>
+        /// Creates text file if no file exists, writes data to text file
+        /// </summary>
+        /// <param name="writeAttendee"></param>
+        public void CreateTextFile(string writeAttendee)
+        {
+            if (!File.Exists(filePath))
+            {
+                using (StreamWriter sw = File.CreateText(filePath))
                 {
-                    using (StreamWriter sw = File.AppendText(filePath))
-                    {
-                        sw.WriteLine(newAttendee);
-                    }
+                    sw.WriteLine(writeAttendee);
+                }
+            }
+            else
+            {
+                using (StreamWriter sw = File.AppendText(filePath))
+                {
+                    sw.WriteLine(writeAttendee);
                 }
             }
         }

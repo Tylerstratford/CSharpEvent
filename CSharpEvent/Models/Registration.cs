@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CSharpEvent.Models
 {
-    internal class Registration
+    public class Registration
     {
      
 
